@@ -35,7 +35,19 @@ void LCD_Init ()
 	LCD_SendCommand (0x00);
 	LCD_SendCommand (EnMode);
 
-
+	/*
+	// Entry Mode set
+	LCD_SendCommand (0x33);
+	LCD_SendCommand (0x32);
+	LCD_SendCommand (0x28);
+	// Display ON/OFF control
+	LCD_SendCommand (0x0f);
+	// cursor moves to right
+	LCD_SendCommand (0x06);
+	LCD_SendCommand (0x80);
+	// Clear Display screen
+	LCD_SendCommand (0x01);
+	*/
 
 }
 
@@ -125,11 +137,83 @@ void LCD_Pos (u8 x_pos, u8 y_pos)
 
 	LCD_SendCommand (Adress>>4) ;
 	LCD_SendCommand (Adress) ;
-	//LCD_SendCommand (LAdress) ;
+
 }
+
+void LCD_SendNum(s32 n)    //can take only 10 Numbers at once
+ {
+
+	s8 i,j,c,ArrCount,s[15];
+	s32 sign;
+	i = 0;
+	ArrCount = 0;
+	sign = n;
+	if (sign < 0)  // record sign
+	{
+	 n = -n;          // make the NUM positive
+	}
+
+	do {                       // Convert NUM to ASCII in reverse order
+
+	 s[i] = (n % 10) + '0';
+	 i++;
+
+	 } while ((n /= 10) > 0);
+
+	if (sign < 0)      // putting sign
+	{
+		s[i++] = '-';
+	}
+
+	ArrCount=i;
+	j=ArrCount-1;
+	for (i = 0; i<j; i++, j--) // reversing the array to make the NUM in order
+	{
+	  c = s[i];
+	  s[i] = s[j];
+	  s[j] = c;
+	}
+
+	for (i = 0; i<ArrCount; i++) // PRINTNIG the NUM
+	{
+		LCD_SendData (s[i]);
+	}
+
+ }
+
+// Converts a floating-point/double number to a ASCII
+void LCD_SendFloat(f32 n)
+{
+	// Extract integer part
+	s16 ipart = (s16)n;
+
+	// Extract floating part
+	f32 fpart = n - (f32)ipart;
+
+	//Exception for negative number
+	if(fpart<0){fpart*=-1;}
+
+	// convert integer part to string
+	LCD_SendNum(ipart);
+
+	// add dot
+	LCD_SendString(".");
+	// Get the value of fraction part upto 4 digits of points after dot
+	fpart = fpart * 10000;
+
+	LCD_SendNum(fpart);
+
+}
+
 void LCD_Clr(void)
 {
 	LCD_SendCommand(CLRSc>>4);
 	LCD_SendCommand (CLRSc); // Clear Display screen
 	_delay_ms(2);
 }
+void LCD_ClrCell(void)
+{
+	LCD_SendCommand (CLR_Cell>>4) ;
+	LCD_SendCommand (CLR_Cell) ;
+}
+

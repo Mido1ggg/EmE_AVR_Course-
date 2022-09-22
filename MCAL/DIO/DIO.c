@@ -8,7 +8,7 @@
 
 
 #include "DIO.h"
-
+#include <avr/io.h>
 
 void Dio_init  (void){
 
@@ -17,6 +17,7 @@ void Dio_init  (void){
 		dio_port_type port = DIO_Cfg_arr[i].Port;
 		dio_pin_type pin = DIO_Cfg_arr[i].Pin;
 		channel_dir_type Direction = DIO_Cfg_arr[i].Dir;
+		dio_pullup_type pullup = DIO_Cfg_arr[i].Pullup;
 		if(OUTPUT == Direction)
 		{
 			switch(port)
@@ -31,34 +32,28 @@ void Dio_init  (void){
 		{
 			switch(port)
 			{
-				case 0 : CLR_BIT(DDRA,pin); break;
-				case 1 : CLR_BIT(DDRB,pin); break;
-				case 2 : CLR_BIT(DDRC,pin); break;
-				case 3 : CLR_BIT(DDRD,pin); break;
+				case 0 :
+					CLR_BIT(DDRA,pin);
+					if(pullup) SET_BIT(PORTA,pin);
+					break;
+				case 1 :
+					CLR_BIT(DDRB,pin);
+					if(pullup) SET_BIT(PORTB,pin);
+					break;
+				case 2 :
+					CLR_BIT(DDRC,pin);
+					if(pullup) SET_BIT(PORTC,pin);
+					break;
+				case 3 :
+					CLR_BIT(DDRD,pin);
+					if(pullup) SET_BIT(PORTD,pin);
+					break;
 			}
+
 		}
 	}
 }
 
-void Dio_Port_write(dio_port_type port,u8 bits)
-{
-	switch (port)
-		{
-			case 0 :
-				PORTA = bits ;
-				break;
-			case 1 :
-				PORTB = bits ;
-				break;
-			case 2 :
-				PORTC = bits ;
-				break;
-			case 3 :
-				PORTD = bits ;
-				break;
-			default : break;
-		}
-}
 void Dio_write(channel_type channel,channel_state_type state){
 
 	dio_port_type port = channel/8 ;
@@ -122,4 +117,27 @@ channel_state_type Dio_read(channel_type channel){
 		default : break;
 	}
 	return 0 ;
+}
+
+void DIO_toggel(channel_type channel)
+{
+	dio_port_type port = channel/8 ;
+		dio_pin_type pin = channel%8 ;
+
+		switch (port)
+		{
+			case 0 :
+				TOG_BIT(PORTA,pin);
+				break;
+			case 1 :
+				TOG_BIT(PORTB,pin);
+				break;
+			case 2 :
+				TOG_BIT(PORTC,pin);
+				break;
+			case 3 :
+				TOG_BIT(PORTD,pin);
+				break;
+			default : break;
+		}
 }

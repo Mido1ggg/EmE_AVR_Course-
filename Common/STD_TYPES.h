@@ -1,6 +1,12 @@
 #ifndef STD_TYPES_H
 #define STD_TYPES_H
 
+typedef enum
+{
+	False,
+	True
+}bool;
+
 typedef unsigned char        u8;
 typedef signed   char        s8;
 

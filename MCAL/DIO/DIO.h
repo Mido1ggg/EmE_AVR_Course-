@@ -14,10 +14,10 @@
 #include "DIO_Types.h"
 #include "DIO_Cfg.h"
 
-//void Dio_init(channel_type channel, channel_dir_type Direction);
+
 void Dio_init(void);
 void Dio_write(channel_type channel,channel_state_type state);
-void Dio_Port_write(dio_port_type port,u8 bits);
+void DIO_toggel(channel_type channel);
 channel_state_type Dio_read(channel_type channel);
 
 

@@ -62,6 +62,11 @@ typedef enum {
 } dio_port_type;
 
 typedef enum {
+	PULLUP_OFF,
+	PULLUP_ON
+} dio_pullup_type;
+
+typedef enum {
 	PIN_0,
 	PIN_1,
 	PIN_2,
@@ -72,13 +77,11 @@ typedef enum {
 	PIN_7
 } dio_pin_type;
 
-
 typedef struct{
 	dio_port_type Port ;
 	dio_pin_type Pin ;
 	channel_dir_type Dir ;
+	dio_pullup_type Pullup;
 }dio_cfg;
-
-
 
 #endif

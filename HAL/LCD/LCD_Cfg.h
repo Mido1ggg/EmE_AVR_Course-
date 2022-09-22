@@ -35,5 +35,6 @@
  */
 #define EnMode		0x06 // 0b 0 1 I/D SH
 
+#define CLR_Cell    0xFE // Sending this data to clear the cell or to make space
 
 #endif /* HAL_LCD_LCD_CFG_H_ */
