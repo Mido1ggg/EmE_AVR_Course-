@@ -1,0 +1,46 @@
+/*
+ * timer_Cfg.h
+ *
+ *  Created on: ??þ/??þ/????
+ *      Author: batma
+ */
+
+#ifndef MCAL_TIMER_TIMER_CFG_H_
+#define MCAL_TIMER_TIMER_CFG_H_
+
+#define PRESCALER_NO	0
+#define PRESCALER_8		1
+#define PRESCALER_32	2
+#define PRESCALER_64	3
+#define PRESCALER_128	4
+#define PRESCALER_256	5
+#define PRESCALER_1024	6
+
+#define TIMER0_NORMAL_MODE		0
+#define TIMER0_CTC_MODE			1
+#define TIMER0_PWM_FAST_MODE	2
+#define TIMER0_PWM_PHASE_MODE	3
+#define TIMER0_OFF				4
+
+#define TIMER0_PRESCALER 	PRESCALER_64
+#define TIMER0_MODE_SELECT	TIMER0_NORMAL_MODE
+
+#define TIMER1_NORMAL_MODE		0
+#define TIMER1_CTC_MODE			1
+#define TIMER1_PWM_FAST_MODE	2
+#define TIMER1_PWM_PHASE_MODE	3
+#define TIMER1_OFF				4
+
+#define TIMER1_PRESCALER 	PRESCALER_64
+#define TIMER1_MODE_SELECT	TIMER1_OFF
+
+#define TIMER2_NORMAL_MODE		0
+#define TIMER2_CTC_MODE			1
+#define TIMER2_PWM_FAST_MODE	2
+#define TIMER2_PWM_PHASE_MODE	3
+#define TIMER2_OFF				4
+
+#define TIMER2_PRESCALER 	PRESCALER_64
+#define TIMER2_MODE_SELECT	TIMER2_OFF
+
+#endif /* MCAL_TIMER_TIMER_CFG_H_ */
